@@ -15,7 +15,7 @@ export default function Header() {
     <header className="border-b bg-card shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold">Staff Hub</h1>
+          <img src="/logo.png" alt="Staff Hub Logo" className="h-20 w-auto" />
           <div className="flex items-center gap-2">
             <GradeLevelSheet 
               open={isGradeLevelSheetOpen} 
