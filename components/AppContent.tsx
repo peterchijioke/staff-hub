@@ -1,5 +1,4 @@
 'use client';
-
 import { useStore } from '@/store/useStore';
 import { useEffect, useState } from 'react';
 import EmployeeList from '@/components/EmployeeList';
