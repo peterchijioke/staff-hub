@@ -4,12 +4,10 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import GradeLevelSheet from '@/components/GradeLevelSheet';
 import AddEmployeeDialog from '@/components/AddEmployeeDialog';
+import { useStore } from '@/store/useStore';
 
-interface HeaderProps {
-  countries: string[];
-}
 
-export default function Header({ countries }: HeaderProps) {
+export default function Header() {
   const [isGradeLevelSheetOpen, setIsGradeLevelSheetOpen] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
@@ -26,7 +24,6 @@ export default function Header({ countries }: HeaderProps) {
             <AddEmployeeDialog 
               open={isAddDialogOpen} 
               onOpenChange={setIsAddDialogOpen} 
-              countries={countries}
             />
           </div>
         </div>

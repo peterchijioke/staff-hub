@@ -14,10 +14,9 @@ import EmployeeForm from "@/components/forms/EmployeeForm";
 interface AddEmployeeDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  countries: string[];
 }
 
-export default function AddEmployeeDialog({ open, onOpenChange, countries }: AddEmployeeDialogProps) {
+export default function AddEmployeeDialog({ open, onOpenChange }: AddEmployeeDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
@@ -32,7 +31,6 @@ export default function AddEmployeeDialog({ open, onOpenChange, countries }: Add
         </DialogHeader>
         <EmployeeForm 
           isEdit={false} 
-          countries={countries} 
           onSuccess={() => onOpenChange(false)}
           onCancel={() => onOpenChange(false)}
         />

@@ -1,7 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useStore } from '@/store/useStore';
-import { getStates } from '@/lib/api';
+import { fetchCountries, getStatesV2 } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,18 +16,19 @@ import {
 
 interface EmployeeFormProps {
   isEdit?: boolean;
-  countries: string[];
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
 export default function EmployeeForm({ 
   isEdit = false, 
-  countries, 
+  
   onSuccess, 
   onCancel 
 }: EmployeeFormProps) {
-  const { addEmployee, updateEmployee, selectedEmployeeId, getEmployeeById, gradeLevels, assignGradeLevel } = useStore();
+  const { addEmployee, updateEmployee, selectedEmployeeId, getEmployeeById, gradeLevels, assignGradeLevel,rawRegion } = useStore();
+
+  const countries:string[]=useMemo(()=>fetchCountries(rawRegion),[rawRegion])
   const [states, setStates] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -49,7 +50,7 @@ export default function EmployeeForm({
       formData.role = employee.role;
       formData.department = employee.department;
       formData.gradeLevelId = employee.gradeLevelId || '';
-      const countryStates = getStates(employee.country);
+      const countryStates = getStatesV2(rawRegion,employee.country);
       setStates(countryStates);
     }
   }
@@ -57,7 +58,7 @@ export default function EmployeeForm({
   const handleCountryChange = (country: string) => {
     setFormData({ ...formData, country, state: '' });
     // Get states for the selected country
-    const countryStates = getStates(country);
+    const countryStates = getStatesV2(rawRegion,country);
     setStates(countryStates);
   };
 
