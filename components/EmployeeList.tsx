@@ -37,20 +37,18 @@ export default function EmployeeList() {
   
   const [mounted, setMounted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 9;
   
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Reset to page 1 when filtered results change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, filterGradeLevelId]);
 
   const employees = getFilteredEmployees();
   
-  // Paginate employees
   const totalPages = Math.ceil(employees.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedEmployees = employees.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -76,7 +74,7 @@ export default function EmployeeList() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 flex flex-col h-full md:h-[85dvh]">
       {/* Search and Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1">
@@ -130,44 +128,53 @@ export default function EmployeeList() {
               onDelete={handleDelete}
             />
           ))}
+          {/* Placeholder cards to prevent layout jump when last page has fewer items */}
+          {paginatedEmployees.length > 0 && paginatedEmployees.length < ITEMS_PER_PAGE &&
+            Array.from({ length: ITEMS_PER_PAGE - paginatedEmployees.length }).map((_, index) => (
+              <div key={`placeholder-${index}`} className="invisible" />
+            ))}
           </div>
         </>
       )}
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-6">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          <div className="flex items-center gap-1">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "outline"}
-                size="sm"
-                onClick={() => setCurrentPage(page)}
-                className="w-10"
-              >
-                {page}
-              </Button>
-            ))}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </Button>
-        </div>
-      )}
+      {/* Pagination - always rendered with flex-shrink-0 to prevent layout jump */}
+      <div className="flex-shrink-0 flex items-center justify-end gap-2 mt-auto py-4">
+        {totalPages > 1 ? (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCurrentPage(page)}
+                  className="w-10"
+                >
+                  {page}
+                </Button>
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </>
+        ) : (
+          <span className="h-6" />
+        )}
+      </div>
     </div>
   );
 }
@@ -184,7 +191,7 @@ function EmployeeCard({ employee, onView, onEdit, onDelete }: EmployeeCardProps)
   const gradeLevel = employee.gradeLevelId ? getGradeLevelById(employee.gradeLevelId) : null;
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-300">
+    <Card className="hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div>
@@ -196,7 +203,7 @@ function EmployeeCard({ employee, onView, onEdit, onDelete }: EmployeeCardProps)
           )}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow">
         <p className="text-sm text-muted-foreground">{employee.department}</p>
         <p className="text-sm mt-2">
           <span className="font-medium">Location:</span> {employee.state}, {employee.country}

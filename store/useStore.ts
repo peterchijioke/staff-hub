@@ -11,23 +11,19 @@ interface StoreState {
   searchQuery: string;
   filterGradeLevelId: string | null;
   
-  // Employee actions
   addEmployee: (employee: Omit<Employee, 'id' | 'createdAt' | 'updatedAt'>) => void;
   updateEmployee: (id: string, employee: Partial<Employee>) => void;
   deleteEmployee: (id: string) => void;
   selectEmployee: (id: string | null) => void;
   
-  // Grade level actions
   addGradeLevel: (name: string, description?: string) => void;
   deleteGradeLevel: (id: string) => void;
   assignGradeLevel: (employeeId: string, gradeLevelId: string | null) => void;
   
-  // UI actions
   setViewMode: (mode: ViewMode) => void;
   setSearchQuery: (query: string) => void;
   setFilterGradeLevelId: (id: string | null) => void;
   
-  // Computed
   getFilteredEmployees: () => Employee[];
   getEmployeeById: (id: string) => Employee | undefined;
   getGradeLevelById: (id: string) => GradeLevel | undefined;

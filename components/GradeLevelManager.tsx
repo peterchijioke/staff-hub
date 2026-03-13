@@ -67,7 +67,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
   }
 
   return (
-    <Card className={className}>
+    <Card className={`${className} h-full md:h-187.5`}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Grade Level Manager</CardTitle>
@@ -76,17 +76,20 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
             size="sm"
             onClick={() => setIsAdding(!isAdding)}
           >
-            {isAdding ? 'Cancel' : 'Add Grade Level'}
+            {isAdding ? "Cancel" : "Add Grade Level"}
           </Button>
         </div>
         <CardDescription>
           Create and manage grade levels for employees
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col flex-1 overflow-auto">
         {/* Add Form */}
         {isAdding && (
-          <form onSubmit={handleAddGradeLevel} className="mb-6 p-4 bg-muted rounded-lg space-y-4">
+          <form
+            onSubmit={handleAddGradeLevel}
+            className="mb-6 p-4 bg-muted rounded-lg space-y-4"
+          >
             <div className="space-y-2">
               <Label htmlFor="gradeName">Grade Level Name *</Label>
               <Input
@@ -118,70 +121,89 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
         {gradeLevels.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <p>No grade levels created yet.</p>
-            <p className="text-sm mt-1">Create grade levels to assign to employees.</p>
+            <p className="text-sm mt-1">
+              Create grade levels to assign to employees.
+            </p>
           </div>
         ) : (
           <>
             <div className="space-y-3">
               {paginatedGradeLevels.map((gl) => {
-              const employeeCount = getEmployeeCount(gl.id);
-              return (
-                <div
-                  key={gl.id}
-                  className="flex items-center justify-between p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
-                >
-                  <div>
-                    <h4 className="font-medium">{gl.name}</h4>
-                    {gl.description && (
-                      <p className="text-sm text-muted-foreground">{gl.description}</p>
-                    )}
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {employeeCount} employee{employeeCount !== 1 ? 's' : ''} assigned
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDeleteGradeLevel(gl.id, gl.name)}
-                    className="text-destructive hover:text-destructive"
+                const employeeCount = getEmployeeCount(gl.id);
+                return (
+                  <div
+                    key={gl.id}
+                    className="flex items-center justify-between p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 6h18"/>
-                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                    </svg>
-                  </Button>
-                </div>
-              );
-            })}
+                    <div>
+                      <h4 className="font-medium">{gl.name}</h4>
+                      {gl.description && (
+                        <p className="text-sm text-muted-foreground">
+                          {gl.description}
+                        </p>
+                      )}
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {employeeCount} employee{employeeCount !== 1 ? "s" : ""}{" "}
+                        assigned
+                      </p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDeleteGradeLevel(gl.id, gl.name)}
+                      className="text-destructive hover:text-destructive"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 6h18" />
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                      </svg>
+                    </Button>
+                  </div>
+                );
+              })}
             </div>
           </>
         )}
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-4 pt-4 border-t">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            <span className="text-sm text-muted-foreground">
-              Page {currentPage} of {totalPages}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
-          </div>
-        )}
+        {/* Pagination - always rendered to prevent layout jump */}
+        <div className="flex-shrink-0 flex items-center justify-center gap-2 pt-4 border-t mt-auto">
+          {totalPages > 1 ? (
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </Button>
+              <span className="text-sm text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </Button>
+            </>
+          ) : (
+            <span className="h-6" />
+          )}
+        </div>
       </CardContent>
     </Card>
   );
