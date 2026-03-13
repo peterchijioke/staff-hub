@@ -22,15 +22,15 @@ export default function AddEmployeeDialog({ open, onOpenChange }: AddEmployeeDia
       <DialogTrigger asChild>
         <Button>Add Employee</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] lg:max-w-[1000px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-150 lg:max-w-250` max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add New Employee</DialogTitle>
           <DialogDescription>
             Fill in the employee details below.
           </DialogDescription>
         </DialogHeader>
-        <EmployeeForm 
-          isEdit={false} 
+        <EmployeeForm
+          isEdit={false}
           onSuccess={() => onOpenChange(false)}
           onCancel={() => onOpenChange(false)}
         />
