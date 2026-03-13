@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Trash2 } from 'lucide-react';
 
 interface GradeLevelManagerProps {
   className?: string;
@@ -133,7 +134,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
                 return (
                   <div
                     key={gl.id}
-                    className="flex items-center justify-between p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
+                    className="flex items-center justify-between p-4 bg-muted border-primary rounded-lg hover:bg-muted/50 transition-colors"
                   >
                     <div>
                       <h4 className="font-medium">{gl.name}</h4>
@@ -153,21 +154,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
                       onClick={() => handleDeleteGradeLevel(gl.id, gl.name)}
                       className="text-destructive hover:text-destructive"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                      </svg>
+                     <Trash2/>
                     </Button>
                   </div>
                 );
