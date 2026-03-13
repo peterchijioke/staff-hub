@@ -13,12 +13,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { City } from '@/types';
 
 interface AppContentProps {
   countries: string[];
+  rawRegionData:City[]
 }
 
-export default function AppContent({ countries }: AppContentProps) {
+export default function AppContent({ countries, rawRegionData }: AppContentProps) {
   const { viewMode, setViewMode, selectedEmployeeId } = useStore();
   const [mounted, setMounted] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -27,22 +29,21 @@ export default function AppContent({ countries }: AppContentProps) {
     setMounted(true);
   }, []);
 
-  
   useEffect(() => {
-    if (viewMode === 'edit' && selectedEmployeeId) {
+    if (viewMode === "edit" && selectedEmployeeId) {
       setIsEditDialogOpen(true);
     }
   }, [viewMode, selectedEmployeeId]);
 
   const handleEditSuccess = () => {
     setIsEditDialogOpen(false);
-    setViewMode('list');
+    setViewMode("list");
   };
 
   const handleEditDialogOpenChange = (open: boolean) => {
     setIsEditDialogOpen(open);
     if (!open) {
-      setViewMode('list');
+      setViewMode("list");
     }
   };
 
@@ -58,8 +59,8 @@ export default function AppContent({ countries }: AppContentProps) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            {viewMode === 'list' && <EmployeeList />}
-            {viewMode === 'profile' && (
+            {viewMode === "list" && <EmployeeList />}
+            {viewMode === "profile" && (
               <>
                 <EmployeeList />
                 <EmployeeProfile />
@@ -67,7 +68,6 @@ export default function AppContent({ countries }: AppContentProps) {
             )}
           </div>
 
-        
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-8">
               <GradeLevelManager />
@@ -85,13 +85,13 @@ export default function AppContent({ countries }: AppContentProps) {
               Update employee information below.
             </DialogDescription>
           </DialogHeader>
-          <EmployeeForm 
-            isEdit={true} 
+          <EmployeeForm
+            isEdit={true}
             countries={countries}
             onSuccess={handleEditSuccess}
             onCancel={() => {
               setIsEditDialogOpen(false);
-              setViewMode('list');
+              setViewMode("list");
             }}
           />
         </DialogContent>

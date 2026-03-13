@@ -17,10 +17,12 @@ export interface Employee {
   updatedAt: string;
 }
 
-export interface City {
-  name: string;
-  country: string;
-  subcountry?: string;
-}
+
 
 export type ViewMode = 'list' | 'add' | 'edit' | 'profile';
+export type City = {
+  country: string;
+  geonameid: number;
+  name: string;
+  subcountry: string;
+};

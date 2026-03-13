@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
-import { Employee, GradeLevel, ViewMode } from '@/types';
+import { City, Employee, GradeLevel, ViewMode } from '@/types';
 
 interface StoreState {
   employees: Employee[];
   gradeLevels: GradeLevel[];
   selectedEmployeeId: string | null;
   viewMode: ViewMode;
+  rawRegion:City[]
   searchQuery: string;
   filterGradeLevelId: string | null;
   
@@ -15,6 +16,7 @@ interface StoreState {
   updateEmployee: (id: string, employee: Partial<Employee>) => void;
   deleteEmployee: (id: string) => void;
   selectEmployee: (id: string | null) => void;
+  setRawRegion: (id: City[]) => void;
   
   addGradeLevel: (name: string, description?: string) => void;
   deleteGradeLevel: (id: string) => void;
@@ -35,10 +37,10 @@ export const useStore = create<StoreState>()(
       employees: [],
       gradeLevels: [],
       selectedEmployeeId: null,
+      rawRegion:[],
       viewMode: 'list',
       searchQuery: '',
       filterGradeLevelId: null,
-
       addEmployee: (employee) => {
         const newEmployee: Employee = {
           ...employee,
@@ -111,7 +113,9 @@ export const useStore = create<StoreState>()(
       setSearchQuery: (query) => {
         set({ searchQuery: query });
       },
-
+      setRawRegion: (query:City[]) => {
+        set({ rawRegion: query });
+      },
       setFilterGradeLevelId: (id) => {
         set({ filterGradeLevelId: id });
       },

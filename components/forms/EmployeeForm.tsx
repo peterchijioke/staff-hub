@@ -126,7 +126,7 @@ export default function EmployeeForm({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="__empty__">Select Country</SelectItem>
-              {countries.map((country) => (
+              {countries?.map((country) => (
                 <SelectItem key={country} value={country}>
                   {country}
                 </SelectItem>

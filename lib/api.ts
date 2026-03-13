@@ -1,3 +1,5 @@
+import { City } from "@/types";
+
 // Static list of countries for faster loading
 const COUNTRIES = [
   "Afghanistan", "Albania", "Algeria", "Argentina", "Australia", "Austria", 
@@ -29,21 +31,21 @@ const STATES_BY_COUNTRY: Record<string, string[]> = {
   "South Africa": ["Gauteng", "KwaZulu-Natal", "Western Cape", "Eastern Cape", "Limpopo"],
 };
 
+
 export function getCountries(): string[] {
   return COUNTRIES;
 }
+const API_URL = process.env.API_URL+'/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json';
 
 export function getStates(country: string): string[] {
   return STATES_BY_COUNTRY[country] || ["Other"];
 }
 
-// For the API - fetches from datahub but with caching
-const API_URL = 'https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json';
 
 export async function fetchCities(): Promise<any[]> {
   try {
     const response = await fetch(API_URL, { 
-      next: { revalidate: 3600 } // Cache for 1 hour
+      next: { revalidate: 3600 } 
     });
     if (!response.ok) {
       throw new Error('Failed to fetch cities');
@@ -56,16 +58,14 @@ export async function fetchCities(): Promise<any[]> {
   }
 }
 
-export function getUniqueCountries(cities: any[]): string[] {
-  const countries = new Set(cities.map((city: any) => city.country));
-  return Array.from(countries).sort();
-}
 
-export function getStatesByCountry(cities: any[], country: string): string[] {
-  const states = new Set(
-    cities
-      .filter((city: any) => city.country === country && city.subcountry)
-      .map((city: any) => city.subcountry)
-  );
-  return Array.from(states).sort();
-}
+
+export const fetchCountries =(data:City[])=>[...new Set(data.map(i => i.country))].sort();
+
+export const generateStateByCountry =(data:City[])=> data.reduce<Record<string, string[]>>((acc, item) => {
+  if (!acc[item.country]) acc[item.country] = [];
+  if (!acc[item.country].includes(item.subcountry)) {
+    acc[item.country].push(item.subcountry);
+  }
+  return acc;
+}, {});
