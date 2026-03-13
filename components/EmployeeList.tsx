@@ -80,6 +80,7 @@ export default function EmployeeList() {
         <div className="flex-1">
           <Input
             type="text"
+            className=' bg-white'
             placeholder="Search by name, role, or department..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -90,7 +91,7 @@ export default function EmployeeList() {
             value={filterGradeLevelId || '__empty__'}
             onValueChange={(value) => setFilterGradeLevelId(value === '__empty__' ? null : value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className=' bg-white'>
               <SelectValue placeholder="All Grade Levels" />
             </SelectTrigger>
             <SelectContent>
