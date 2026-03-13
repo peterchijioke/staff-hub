@@ -56,6 +56,7 @@ export default function EmployeeForm({
 
   const handleCountryChange = (country: string) => {
     setFormData({ ...formData, country, state: '' });
+    // Get states for the selected country
     const countryStates = getStates(country);
     setStates(countryStates);
   };
@@ -99,6 +100,7 @@ export default function EmployeeForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Name */}
         <div className="md:col-span-2 space-y-2">
           <Label htmlFor="name">Full Name *</Label>
           <Input
@@ -112,6 +114,7 @@ export default function EmployeeForm({
           />
         </div>
 
+        {/* Country */}
         <div className="space-y-2">
           <Label htmlFor="country">Country *</Label>
           <Select
@@ -132,6 +135,7 @@ export default function EmployeeForm({
           </Select>
         </div>
 
+        {/* State */}
         <div className="space-y-2">
           <Label htmlFor="state">State/Province *</Label>
           <Select
@@ -153,6 +157,7 @@ export default function EmployeeForm({
           </Select>
         </div>
 
+        {/* Address */}
         <div className="md:col-span-2 space-y-2">
           <Label htmlFor="address">Address *</Label>
           <Input
@@ -166,6 +171,7 @@ export default function EmployeeForm({
           />
         </div>
 
+        {/* Role */}
         <div className="space-y-2">
           <Label htmlFor="role">Role *</Label>
           <Input
@@ -179,6 +185,7 @@ export default function EmployeeForm({
           />
         </div>
 
+        {/* Department */}
         <div className="space-y-2">
           <Label htmlFor="department">Department *</Label>
           <Input
@@ -192,6 +199,7 @@ export default function EmployeeForm({
           />
         </div>
 
+        {/* Grade Level */}
         <div className="md:col-span-2 space-y-2">
           <Label htmlFor="gradeLevel">Grade Level (Optional)</Label>
           <Select

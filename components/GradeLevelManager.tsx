@@ -84,6 +84,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Add Form */}
         {isAdding && (
           <form onSubmit={handleAddGradeLevel} className="mb-6 p-4 bg-muted rounded-lg space-y-4">
             <div className="space-y-2">
@@ -113,6 +114,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
           </form>
         )}
 
+        {/* Grade Level List */}
         {gradeLevels.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <p>No grade levels created yet.</p>
@@ -156,6 +158,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
           </>
         )}
 
+        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-2 mt-4 pt-4 border-t">
             <Button

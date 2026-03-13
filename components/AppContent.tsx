@@ -39,6 +39,7 @@ export default function AppContent({ countries }: AppContentProps) {
     setMounted(true);
   }, []);
 
+  
   useEffect(() => {
     if (viewMode === 'edit' && selectedEmployeeId) {
       setIsEditDialogOpen(true);
@@ -67,11 +68,13 @@ export default function AppContent({ countries }: AppContentProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Header */}
       <header className="border-b bg-card shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             <h1 className="text-2xl font-bold">Staff Hub</h1>
             <div className="flex items-center gap-2">
+              {/* Mobile Grade Level Button */}
               <Sheet open={isGradeLevelSheetOpen} onOpenChange={setIsGradeLevelSheetOpen}>
                 <SheetTrigger asChild>
                   <Button variant="outline" size="sm" className="lg:hidden">
@@ -126,6 +129,7 @@ export default function AppContent({ countries }: AppContentProps) {
             )}
           </div>
 
+        
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-8">
               <GradeLevelManager />
@@ -134,6 +138,7 @@ export default function AppContent({ countries }: AppContentProps) {
         </div>
       </main>
 
+      {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={handleEditDialogOpenChange}>
         <DialogContent className="sm:max-w-[600px] lg:max-w-[1000px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>

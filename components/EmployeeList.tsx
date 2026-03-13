@@ -40,11 +40,17 @@ export default function EmployeeList() {
   const ITEMS_PER_PAGE = 10;
   
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Reset to page 1 when filtered results change
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, filterGradeLevelId]);
 
   const employees = getFilteredEmployees();
   
+  // Paginate employees
   const totalPages = Math.ceil(employees.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedEmployees = employees.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -71,6 +77,7 @@ export default function EmployeeList() {
 
   return (
     <div className="space-y-6">
+      {/* Search and Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1">
           <Input
@@ -100,10 +107,12 @@ export default function EmployeeList() {
         </div>
       </div>
 
+      {/* Employee Count */}
       <div className="text-sm text-muted-foreground">
         Showing {employees.length > 0 ? startIndex + 1 : 0}-{Math.min(startIndex + ITEMS_PER_PAGE, employees.length)} of {employees.length} employee{employees.length !== 1 ? 's' : ''}
       </div>
 
+      {/* Employee Grid */}
       {employees.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
           <p className="text-lg">No employees found.</p>
@@ -125,6 +134,7 @@ export default function EmployeeList() {
         </>
       )}
 
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-6">
           <Button
