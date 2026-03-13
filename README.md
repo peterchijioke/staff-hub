@@ -102,7 +102,7 @@ Each employee has:
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:peterchijioke/staff-hub.git
 cd staff-hub
 ```
 
