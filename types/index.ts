@@ -10,6 +10,12 @@ export interface Department {
   description?: string;
 }
 
+export interface Role {
+  id: string;
+  name: string;
+  description?: string;
+}
+
 export interface Employee {
   id: string;
   name: string;

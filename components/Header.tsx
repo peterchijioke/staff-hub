@@ -5,12 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Users, Award, Plus } from 'lucide-react';
 import GradeLevelSheet from '@/components/GradeLevelSheet';
 import DepartmentSheet from '@/components/DepartmentSheet';
+import RoleSheet from '@/components/RoleSheet';
 import AddEmployeeDialog from '@/components/AddEmployeeDialog';
 
 
 export default function Header() {
   const [isGradeLevelSheetOpen, setIsGradeLevelSheetOpen] = useState(false);
   const [isDepartmentSheetOpen, setIsDepartmentSheetOpen] = useState(false);
+  const [isRoleSheetOpen, setIsRoleSheetOpen] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   return (
@@ -19,6 +21,10 @@ export default function Header() {
         <div className="flex items-center justify-between gap-4">
           <img src="/logo.png" alt="Staff Hub Logo" className="h-10 md:h-16 w-auto" />
           <div className="flex items-center gap-2">
+            <RoleSheet 
+              open={isRoleSheetOpen} 
+              onOpenChange={setIsRoleSheetOpen} 
+            />
             <DepartmentSheet 
               open={isDepartmentSheetOpen} 
               onOpenChange={setIsDepartmentSheetOpen} 

@@ -26,7 +26,7 @@ export default function EmployeeForm({
   onSuccess, 
   onCancel 
 }: EmployeeFormProps) {
-  const { addEmployee, updateEmployee, selectedEmployeeId, getEmployeeById, gradeLevels, assignGradeLevel,rawRegion, departments } = useStore();
+  const { addEmployee, updateEmployee, selectedEmployeeId, getEmployeeById, gradeLevels, assignGradeLevel,rawRegion, departments, roles } = useStore();
 
   const countries:string[]=useMemo(()=>fetchCountries(rawRegion),[rawRegion])
   const [states, setStates] = useState<string[]>([]);
@@ -175,15 +175,34 @@ export default function EmployeeForm({
         {/* Role */}
         <div className="space-y-2">
           <Label htmlFor="role">Role *</Label>
-          <Input
-            type="text"
-            id="role"
-            required
-            className="h-10"
-            value={formData.role}
-            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-            placeholder="Enter role"
-          />
+          {roles.length > 0 ? (
+            <Select
+              value={formData.role || '__empty__'}
+              onValueChange={(value) => setFormData({ ...formData, role: value === '__empty__' ? '' : value })}
+            >
+              <SelectTrigger className="w-full" style={{ height: '2.5rem' }}>
+                <SelectValue placeholder="Select Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__empty__">Select Role</SelectItem>
+                {roles.map((role) => (
+                  <SelectItem key={role.id} value={role.name}>
+                    {role.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <Input
+              type="text"
+              id="role"
+              required
+              className="h-10"
+              value={formData.role}
+              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+              placeholder="Enter role"
+            />
+          )}
         </div>
 
         {/* Department */}

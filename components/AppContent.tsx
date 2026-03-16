@@ -6,6 +6,7 @@ import EmployeeForm from '@/components/forms/EmployeeForm';
 import EmployeeProfile from '@/components/EmployeeProfile';
 import GradeLevelManager from '@/components/GradeLevelManager';
 import DepartmentManager from '@/components/DepartmentManager';
+import RoleManager from '@/components/RoleManager';
 import Header from '@/components/Header';
 import {
   Dialog,
@@ -71,6 +72,7 @@ export default function AppContent({  rawRegionData }: AppContentProps) {
           {/* Desktop: Sidebar managers */}
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-8 space-y-8">
+              <RoleManager />
               <DepartmentManager />
               <GradeLevelManager />
             </div>

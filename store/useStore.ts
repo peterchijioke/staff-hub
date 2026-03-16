@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
-import { City, Department, Employee, GradeLevel, ViewMode } from '@/types';
+import { City, Department, Employee, GradeLevel, Role, ViewMode } from '@/types';
 
 interface StoreState {
   employees: Employee[];
   gradeLevels: GradeLevel[];
   departments: Department[];
+  roles: Role[];
   selectedEmployeeId: string | null;
   viewMode: ViewMode;
   rawRegion:City[]
@@ -26,6 +27,9 @@ interface StoreState {
   addDepartment: (name: string, description?: string) => void;
   deleteDepartment: (id: string) => void;
   
+  addRole: (name: string, description?: string) => void;
+  deleteRole: (id: string) => void;
+  
   setViewMode: (mode: ViewMode) => void;
   setSearchQuery: (query: string) => void;
   setFilterGradeLevelId: (id: string | null) => void;
@@ -41,6 +45,7 @@ export const useStore = create<StoreState>()(
       employees: [],
       gradeLevels: [],
       departments: [],
+      roles: [],
       selectedEmployeeId: null,
       rawRegion:[],
       viewMode: 'list',
@@ -115,6 +120,23 @@ export const useStore = create<StoreState>()(
       deleteDepartment: (id) => {
         set((state) => ({
           departments: state.departments.filter((dept) => dept.id !== id),
+        }));
+      },
+
+      addRole: (name, description) => {
+        const newRole: Role = {
+          id: uuidv4(),
+          name,
+          description,
+        };
+        set((state) => ({
+          roles: [...state.roles, newRole],
+        }));
+      },
+
+      deleteRole: (id) => {
+        set((state) => ({
+          roles: state.roles.filter((role) => role.id !== id),
         }));
       },
 
