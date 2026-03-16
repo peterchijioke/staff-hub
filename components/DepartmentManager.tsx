@@ -25,7 +25,7 @@ export default function DepartmentManager({ className }: DepartmentManagerProps)
   const [newDeptDescription, setNewDeptDescription] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 3;
 
   useEffect(() => {
     setMounted(true);

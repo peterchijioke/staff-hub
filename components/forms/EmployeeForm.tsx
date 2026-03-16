@@ -26,7 +26,7 @@ export default function EmployeeForm({
   onSuccess, 
   onCancel 
 }: EmployeeFormProps) {
-  const { addEmployee, updateEmployee, selectedEmployeeId, getEmployeeById, gradeLevels, assignGradeLevel,rawRegion } = useStore();
+  const { addEmployee, updateEmployee, selectedEmployeeId, getEmployeeById, gradeLevels, assignGradeLevel,rawRegion, departments } = useStore();
 
   const countries:string[]=useMemo(()=>fetchCountries(rawRegion),[rawRegion])
   const [states, setStates] = useState<string[]>([]);
@@ -189,15 +189,34 @@ export default function EmployeeForm({
         {/* Department */}
         <div className="space-y-2">
           <Label htmlFor="department">Department *</Label>
-          <Input
-            type="text"
-            id="department"
-            required
-            className="h-10"
-            value={formData.department}
-            onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-            placeholder="Enter department"
-          />
+          {departments.length > 0 ? (
+            <Select
+              value={formData.department || '__empty__'}
+              onValueChange={(value) => setFormData({ ...formData, department: value === '__empty__' ? '' : value })}
+            >
+              <SelectTrigger className="w-full" style={{ height: '2.5rem' }}>
+                <SelectValue placeholder="Select Department" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="__empty__">Select Department</SelectItem>
+                {departments.map((dept) => (
+                  <SelectItem key={dept.id} value={dept.name}>
+                    {dept.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <Input
+              type="text"
+              id="department"
+              required
+              className="h-10"
+              value={formData.department}
+              onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+              placeholder="Enter department"
+            />
+          )}
         </div>
 
         {/* Grade Level */}

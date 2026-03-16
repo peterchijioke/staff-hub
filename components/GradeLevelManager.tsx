@@ -26,7 +26,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
   const [newGradeDescription, setNewGradeDescription] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 3;
 
   useEffect(() => {
     setMounted(true);
@@ -68,7 +68,7 @@ export default function GradeLevelManager({ className }: GradeLevelManagerProps)
   }
 
   return (
-    <Card className={`${className} h-full md:h-187.5`}>
+    <Card className={className}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Grade Level Manager</CardTitle>

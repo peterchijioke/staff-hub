@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Users, Award, Plus } from 'lucide-react';
 import GradeLevelSheet from '@/components/GradeLevelSheet';
+import DepartmentSheet from '@/components/DepartmentSheet';
 import AddEmployeeDialog from '@/components/AddEmployeeDialog';
-import { useStore } from '@/store/useStore';
 
 
 export default function Header() {
   const [isGradeLevelSheetOpen, setIsGradeLevelSheetOpen] = useState(false);
+  const [isDepartmentSheetOpen, setIsDepartmentSheetOpen] = useState(false);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   return (
@@ -17,6 +19,10 @@ export default function Header() {
         <div className="flex items-center justify-between gap-4">
           <img src="/logo.png" alt="Staff Hub Logo" className="h-10 md:h-16 w-auto" />
           <div className="flex items-center gap-2">
+            <DepartmentSheet 
+              open={isDepartmentSheetOpen} 
+              onOpenChange={setIsDepartmentSheetOpen} 
+            />
             <GradeLevelSheet 
               open={isGradeLevelSheetOpen} 
               onOpenChange={setIsGradeLevelSheetOpen} 

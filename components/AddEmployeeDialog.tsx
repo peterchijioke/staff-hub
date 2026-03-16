@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import EmployeeForm from "@/components/forms/EmployeeForm";
 
 interface AddEmployeeDialogProps {
@@ -20,7 +21,10 @@ export default function AddEmployeeDialog({ open, onOpenChange }: AddEmployeeDia
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button>Add Employee</Button>
+        <Button>
+          <Plus className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Add Employee</span>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-150 lg:max-w-250` max-h-[90vh] overflow-y-auto">
         <DialogHeader>

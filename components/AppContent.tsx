@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import EmployeeList from '@/components/EmployeeList';
 import EmployeeForm from '@/components/forms/EmployeeForm';
 import EmployeeProfile from '@/components/EmployeeProfile';
-import GradeLevelManager from '@/components/GradeLevelManager';
 import Header from '@/components/Header';
 import {
   Dialog,
@@ -58,20 +57,13 @@ export default function AppContent({  rawRegionData }: AppContentProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <Header  />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4">
             {viewMode === "list" && <EmployeeList />}
             {viewMode === "profile" && <EmployeeProfile />}
-          </div>
-
-          <div className="hidden lg:block lg:col-span-1">
-            <div className="sticky top-8">
-              <GradeLevelManager />
-            </div>
           </div>
         </div>
       </main>
