@@ -16,7 +16,7 @@ export default function Header() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   return (
-    <header className="border-b bg-card shadow-sm">
+    <header className="border-b bg-card shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between gap-4">
           <img src="/logo.png" alt="Staff Hub Logo" className="h-10 md:h-16 w-auto" />
