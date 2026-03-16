@@ -4,6 +4,12 @@ export interface GradeLevel {
   description?: string;
 }
 
+export interface Department {
+  id: string;
+  name: string;
+  description?: string;
+}
+
 export interface Employee {
   id: string;
   name: string;

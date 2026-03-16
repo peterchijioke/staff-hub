@@ -32,10 +32,13 @@ export default function AppContent({  rawRegionData }: AppContentProps) {
     if (rawRegionData?.length > 0) {
       setRawRegion(rawRegionData);
     }
+  }, [rawRegionData, setRawRegion]);
+
+  useEffect(() => {
     if (viewMode === "edit" && selectedEmployeeId) {
       setIsEditDialogOpen(true);
     }
-  }, [viewMode, selectedEmployeeId, rawRegionData]);
+  }, [viewMode, selectedEmployeeId]);
 
   const handleEditSuccess = () => {
     setIsEditDialogOpen(false);
@@ -62,12 +65,7 @@ export default function AppContent({  rawRegionData }: AppContentProps) {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
             {viewMode === "list" && <EmployeeList />}
-            {viewMode === "profile" && (
-              <>
-                <EmployeeList />
-                <EmployeeProfile />
-              </>
-            )}
+            {viewMode === "profile" && <EmployeeProfile />}
           </div>
 
           <div className="hidden lg:block lg:col-span-1">
