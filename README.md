@@ -1,10 +1,10 @@
 # Staff Hub - Staff Directory Application
 
-A modern staff directory web application built with Next.js, featuring employee management, grade levels, and persistent state storage.
+A modern staff directory web application built with Next.js, featuring employee management, department, role, and grade level management with persistent state storage.
 
 ## Overview
 
-Staff Hub is a comprehensive staff directory application that allows organizations to manage their employees effectively. It provides a clean, responsive interface for viewing, adding, editing, and deleting employee records, with support for grade level management and filtering capabilities.
+Staff Hub is a comprehensive staff directory application that allows organizations to manage their employees effectively. It provides a clean, responsive interface for viewing, adding, editing, and deleting employee records, with support for department, role, and grade level management.
 
 ## Tech Stack & Approach
 
@@ -41,8 +41,12 @@ src/
 │   ├── AppContent.tsx
 │   ├── EmployeeList.tsx
 │   ├── EmployeeProfile.tsx
+│   ├── DepartmentManager.tsx
+│   ├── DepartmentSheet.tsx
 │   ├── GradeLevelManager.tsx
 │   ├── GradeLevelSheet.tsx
+│   ├── RoleManager.tsx
+│   ├── RoleSheet.tsx
 │   └── Header.tsx
 ├── hooks/                # Custom React hooks
 │   └── use-mobile.ts
@@ -58,7 +62,7 @@ src/
 ## Features Implemented
 
 ### Core Employee Management
-- ✅ View all employees in a responsive list/table
+- ✅ View all employees in a responsive grid/list
 - ✅ Add new employee with full details
 - ✅ Edit existing employee information
 - ✅ View individual employee profile
@@ -70,10 +74,22 @@ Each employee has:
 - Country (fetched from world cities API)
 - State/Region
 - Address
-- Role
-- Department
+- Role (select from predefined roles)
+- Department (select from predefined departments)
 - Grade Level (assignable)
 - Created/Updated timestamps
+
+### Department Management
+- ✅ Create new departments (e.g., Engineering, HR, Sales)
+- ✅ Delete departments
+- ✅ Select from predefined departments when adding employees
+- ✅ Falls back to text input if no departments exist
+
+### Role Management
+- ✅ Create new roles (e.g., Manager, Developer, Designer)
+- ✅ Delete roles
+- ✅ Select from predefined roles when adding employees
+- ✅ Falls back to text input if no roles exist
 
 ### Grade Level Management
 - ✅ Create new grade levels (e.g., LVL1, LVL2, LVL3)
@@ -81,13 +97,21 @@ Each employee has:
 - ✅ Assign employees to grade levels
 - ✅ Automatic unassign when grade level is deleted
 
+### Responsive Design
+- ✅ Desktop: Sidebar with Department, Role, and Grade Level managers
+- ✅ Mobile: Drawer/sheet UI accessible via header icons
+- ✅ Sticky header that stays at top while scrolling
+
 ### Filtering & Search
 - ✅ Filter employees by name
+- ✅ Filter employees by department
 - ✅ Filter employees by grade level
 - ✅ Combined search and filter
 
 ### Data Persistence
 - ✅ All employee data persisted to localStorage
+- ✅ All departments persisted to localStorage
+- ✅ All roles persisted to localStorage
 - ✅ All grade levels persisted to localStorage
 - ✅ State survives browser refresh
 
@@ -138,19 +162,35 @@ pnpm start
 ## Usage Guide
 
 ### Adding an Employee
-1. Click the "Add Employee" button in the header
-2. Fill in the employee details (name, country, state, address, role, department)
-3. Optionally assign a grade level
-4. Click "Save" to create the employee
+1. Click the "Add Employee" button (+) in the header
+2. Fill in the employee details:
+   - Name, Country, State, Address
+   - Role (select from dropdown if roles exist)
+   - Department (select from dropdown if departments exist)
+   - Grade Level (optional)
+3. Click "Add Employee" to create the record
+
+### Managing Departments
+1. **Desktop**: View in right sidebar
+2. **Mobile**: Click the Users icon in header
+3. Add new departments with name and optional description
+4. Delete unused departments
+
+### Managing Roles
+1. **Desktop**: View in right sidebar (first item)
+2. **Mobile**: Click the Briefcase icon in header
+3. Add new roles with name and optional description
+4. Delete unused roles
 
 ### Managing Grade Levels
-1. Click "Manage Grades" in the header
-2. Add new grade levels with name and optional description
-3. Delete unused grade levels
-4. Employees assigned to deleted grades will be automatically unassigned
+1. **Desktop**: View in right sidebar
+2. **Mobile**: Click the Award icon in header
+3. Add new grade levels with name and optional description
+4. Delete unused grade levels
+5. Employees assigned to deleted grades will be automatically unassigned
 
 ### Viewing/Editing Employees
-- Click on any employee row to view their profile
+- Click "View" on any employee card to view their profile
 - Use the "Edit" button to modify employee details
 - Use the "Delete" button to remove an employee
 
@@ -163,6 +203,8 @@ pnpm start
 ### State Management (Zustand)
 The [`useStore.ts`](store/useStore.ts) file contains:
 - Employee CRUD operations
+- Department management
+- Role management
 - Grade level management
 - Search and filter state
 - Local storage persistence configuration
@@ -175,6 +217,8 @@ The [`useStore.ts`](store/useStore.ts) file contains:
 
 ### Types ([`types/index.ts`](types/index.ts))
 - `Employee` - Employee data model
+- `Department` - Department data model
+- `Role` - Role data model
 - `GradeLevel` - Grade level data model
 - `City` - City data from API
 - `ViewMode` - Application view states
